@@ -22,7 +22,7 @@ def eval_gs(model,
     bcs_err = []
 
     for xx, yy, xx_inter in pbar:
-        xx, yy, xx_inter = xx.to(device), yy.to(device), xx_inter.to(device)
+        xx, yy, xx_inter = xx.cpu().numpy(), yy.cpu().numpy(), xx_inter.cpu().numpy()
 
            
         fields_inter = psi_interpolation(xx, yy, xx_inter)   # (batch, 161*361, 101*361, 1)
@@ -48,6 +48,6 @@ def eval_gs(model,
     mean_err = np.mean(test_err)
     std_err = np.std(test_err, ddof=1) / np.sqrt(len(test_err))
 
-    print(f'==Averaged relative L2 error mean: {mean_err}, std error: {std_err}==\n'
-          f'==Averaged equation error mean: {mean_pde_err}, std error: {std_pde_err}==\n'
-          f'==Averaged Boundary condition error mean: {mean_bcs_err}, std error: {std_bcs_err}==')
+    print(f'Averaged relative L2 error mean: {mean_err}, std error: {std_err}\n'
+          f'Averaged equation error mean: {mean_pde_err}, std error: {std_pde_err}\n'
+          f'Averaged Boundary condition error mean: {mean_bcs_err}, std error: {std_bcs_err}')
