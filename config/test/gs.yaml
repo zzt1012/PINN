@@ -1,20 +1,21 @@
 data:
   name: 'gs'
-  datapath: '../data/gsdata.mat'
+  datapath: '/home/ubuntu/user/zhangzitong/data/zubuzu/data/gsdata.mat'
   total_num: 1000
   offset: 800
   n_sample: 32
+  coords_shape: 2
+  fields_shape: 1
+  intep_psi_shape: 1
 
 model:
-  layers: [16, 24, 24, 32, 32]
-  modes1: [15, 12, 9, 9]
-  modes2: [15, 12, 9, 9]
-  fc_dim: 128
-  act: gelu
+  branch_layers: [64, 64, 64]
+  trunk_layers: [64, 64]
+  activation: tanh
 
 test:
   batchsize: 1
-  ckpt: 'checkpoints/gs-ad/gs-pretrain.pt'
+  ckpt: 'checkpoints/gs-deeponet/gs-pretrain-deeponet.pt'
 
 # log:
 #   project: 'PINO-burgers-test'
