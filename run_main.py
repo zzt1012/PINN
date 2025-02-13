@@ -73,11 +73,10 @@ if __name__ == '__main__':
     parser.add_argument('--mode', type=str, help='train or test')
     args = parser.parse_args()
 
-    config_file = args.config_path = 'config/train/gs.yaml'
+    config_file = args.config_path
     with open(config_file, 'r') as stream:
         config = yaml.load(stream, yaml.FullLoader)
-    # if args.mode == 'train':
-    #     run(config)
-    # else:
-    #     test(config)
-    run(config)
+    if args.mode == 'train':
+        run(config)
+    else:
+        test(config)
