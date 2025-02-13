@@ -1,0 +1,43 @@
+data:
+  name: 'gs'
+  datapath: '/home/ubuntu/user/zhangzitong/data/zubuzu/data/gsdata.mat'
+  total_num: 10000
+  offset: 0
+  n_sample: 1
+  coords_shape: 2
+  fields_shape: 1
+  intep_psi_shape: 1
+
+parameters:
+  beta0: 0.8
+  lambda: 1.0e+7
+  R0: 0.1
+  np: 2.0
+  mp: 10
+  nf: 1.0
+  mf: 1.0
+  miu0: 1.256637061e-6
+
+model:
+  branch_layers: [64, 64, 64]
+  trunk_layers: [64, 64]
+  activation: tanh
+
+train:
+  batchsize: 1
+  epochs: 2000
+  betas: [0.9, 0.999]
+  milestones: [400, 800, 1200]
+  data_loss: 10.0
+  pde_loss: 1.0
+  bcs_loss: 10.0
+  base_lr: 0.001
+  scheduler_gamma: 0.5
+  save_dir: 'gs-deeponet'
+  save_name: 'gs-pretrain-deeponet.pt'
+
+# log:
+#   project: 'PINO-gs-pretrain'
+#   group: 'deeponet'
+
+
