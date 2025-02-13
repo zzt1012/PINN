@@ -1,0 +1,23 @@
+data:
+  name: 'gs'
+  datapath: '../data/gsdata.mat'
+  total_num: 1000
+  offset: 800
+  n_sample: 32
+
+model:
+  layers: [16, 24, 24, 32, 32]
+  modes1: [15, 12, 9, 9]
+  modes2: [15, 12, 9, 9]
+  fc_dim: 128
+  act: gelu
+
+test:
+  batchsize: 1
+  ckpt: 'checkpoints/gs-ad/gs-pretrain.pt'
+
+# log:
+#   project: 'PINO-burgers-test'
+#   group: 'gelu-test'
+
+
