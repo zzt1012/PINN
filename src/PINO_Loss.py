@@ -65,12 +65,6 @@ def PINO_loss(model, inn_var, xx, true_var, fields_inter, out_var, config, xx_in
     d2psidr2 = gradients(dpsidr.sum(), inn_var)[:, (0,)]
     d2psidz2 = gradients(dpsidz.sum(), inn_var)[:, (1,)]
 
-
-    #print("xx", res_i.shape)
-    # print('out_var', out_var[:, :33, :21, :].shape)
-    # print('xx_inter', xx_inter.shape)
-    # print(true_var.shape)
-
     dPdpsi_norm = - config['parameters']['beta0'] * config['parameters']['lambda'] / config['parameters']['R0'] * (1 - psi_norm ** config['parameters']['np']) ** config['parameters']['mp']
     dF2dpsi_norm = -2 * config['parameters']['lambda'] * config['parameters']['miu0'] * config['parameters']['R0'] * (1 - config['parameters']['beta0']) * (1 - psi_norm ** config['parameters']['nf']) ** config['parameters']['mf']
     res_i = d2psidr2 - dpsidr / (R + 1e-8)  + d2psidz2 + config['parameters']['miu0'] * (R + 1e-8) ** 2 * dPdpsi_norm + (1 / 2) * dF2dpsi_norm
