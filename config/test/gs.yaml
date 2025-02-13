@@ -17,6 +17,16 @@ test:
   batchsize: 1
   ckpt: 'checkpoints/gs-deeponet/gs-pretrain-deeponet.pt'
 
+parameters:
+  beta0: 0.8
+  lambda: 1.0e+7
+  R0: 0.1
+  np: 2.0
+  mp: 10
+  nf: 1.0
+  mf: 1.0
+  miu0: 1.256637061e-6
+
 # log:
 #   project: 'PINO-burgers-test'
 #   group: 'gelu-test'
