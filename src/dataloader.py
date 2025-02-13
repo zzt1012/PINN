@@ -176,11 +176,11 @@ class GSLoader(object):
     def __init__(self, datapath):
         dataloader = MatReader(datapath)
 
-        self.field = dataloader.read_field('psitmp').unsqueeze(-1)[:, ::5, ::5, :]                 # (10000, 161, 101, 1)
-        self.coords = np.concatenate((dataloader.read_field('RR').unsqueeze(-1)[:, ::5, ::5, :] , 
-                                      dataloader.read_field('ZZ').unsqueeze(-1)[:, ::5, ::5, :] ), axis=-1)  # (10000, 161, 101, 2)
-        self.coords_Rin = dataloader.read_field('Rtmp').permute(0, 2, 1)[:, ::50, :]          # (10000, 361, 1)
-        self.coords_Zin = dataloader.read_field('Ztmp').permute(0, 2, 1)[:, ::50, :]        
+        self.field = dataloader.read_field('psitmp').unsqueeze(-1)                 # (10000, 161, 101, 1)
+        self.coords = np.concatenate((dataloader.read_field('RR').unsqueeze(-1) , 
+                                      dataloader.read_field('ZZ').unsqueeze(-1)), axis=-1)  # (10000, 161, 101, 2)
+        self.coords_Rin = dataloader.read_field('Rtmp').permute(0, 2, 1)          # (10000, 361, 1)
+        self.coords_Zin = dataloader.read_field('Ztmp').permute(0, 2, 1)        
         self.coords_inter = torch.cat((self.coords_Rin, self.coords_Zin), dim=-1)  # (10000, 361, 2)
 
         # self.coords_s = self.coords.shape[0]
