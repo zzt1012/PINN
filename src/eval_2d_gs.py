@@ -24,13 +24,17 @@ def eval_gs(model,
     for xx, yy, xx_inter in pbar:
         xx, yy, xx_inter = xx.to(device), yy.to(device), xx_inter.to(device)
 
-        fields_inter = psi_interpolation(xx, yy, xx_inter)
-        xx = torch.tile(fields_inter, (1, fields_inter.shape[1], fields_inter.shape[2], 1))  #  (batch, 161*361, 101*361, 1)
-        
-        out = model([fields_inter, ], xx)
-        #data_loss = myloss(out, yy)
-
-        bcs_loss, pde_loss, data_loss = PINO_loss(xx, yy, fields_inter, out, config, xx_inter)
+           
+        fields_inter = psi_interpolation(xx, yy, xx_inter)   # (batch, 161*361, 101*361, 1)
+            
+        xx, yy, xx_inter = torch.tensor(xx), torch.tensor(yy), torch.tensor(xx_inter)
+        xx, yy, xx_inter, fields_inter = xx.to(device), yy.to(device), xx_inter.to(device), fields_inter.to(device)
+        xx_tile = torch.tile(xx, (1, xx_inter.shape[1], xx_inter.shape[1], 1))  # (batch, 161*361, 101*361, 1)
+          
+        pred = model([fields_inter, ], xx_tile)
+            #data_loss = myloss(pred, yy)
+        pde_loss, bcs_loss, data_loss = PINO_loss(model, xx_tile, xx, yy, fields_inter, pred, config, xx_inter)
+    
         test_err.append(data_loss.item())
         pde_err.append(pde_loss.item())
         bcs_err.append(bcs_loss.item())
